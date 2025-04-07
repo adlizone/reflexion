@@ -1,0 +1,6 @@
+/home/adlizone/mca_workspace/fast_downward_textworld-20.6.2/builds/library/CMakeFiles/translate.dir
+/home/adlizone/mca_workspace/fast_downward_textworld-20.6.2/builds/library/CMakeFiles/edit_cache.dir
+/home/adlizone/mca_workspace/fast_downward_textworld-20.6.2/builds/library/CMakeFiles/rebuild_cache.dir
+/home/adlizone/mca_workspace/fast_downward_textworld-20.6.2/builds/library/search/CMakeFiles/downward.dir
+/home/adlizone/mca_workspace/fast_downward_textworld-20.6.2/builds/library/search/CMakeFiles/edit_cache.dir
+/home/adlizone/mca_workspace/fast_downward_textworld-20.6.2/builds/library/search/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,8 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/adlizone/mca_workspace/fast_downward_textworld-20.6.2/builds/library/cmake_install.cmake",
+		"/home/adlizone/mca_workspace/fast_downward_textworld-20.6.2/builds/library/search/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
