@@ -1,6 +1,6 @@
 python main.py \
-        --num_trials 10 \
-        --num_envs 134 \
-        --run_name "base_run_logs_gpt_35_turbo" \
-        --model "gpt-3.5-turbo"
+        --num_trials 1 \
+        --num_envs 1 \
+        --run_name "base_run_logs_phi-4" \
+        --model "phi-4"
 

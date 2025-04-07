@@ -14,7 +14,7 @@ else:
     from typing_extensions import Literal
 
 
-Model = Literal["gpt-4", "gpt-3.5-turbo", "text-davinci-003"]
+Model = Literal["phi-4", "gpt-4", "gpt-3.5-turbo", "text-davinci-003"]
 
 openai.api_key = os.getenv('OPENAI_API_KEY')
 

@@ -10,14 +10,17 @@ import alfworld
 import alfworld.agents.environment
 from utils import Model, get_chat, get_completion
 from env_history import EnvironmentHistory
+from azure_model import AzureModel
 
 from typing import List, Dict, Any, Tuple
  
-openai.api_key = os.environ["OPENAI_API_KEY"]
+#openai.api_key = os.environ["OPENAI_API_KEY"]
 FOLDER = './prompts'
 PROMPT_FILE = 'alfworld_3prompts.json'
 with open(os.path.join(FOLDER, PROMPT_FILE), 'r') as f:
     d = json.load(f)
+
+azure_model = AzureModel(name="Phi-4")
 
 def llm(prompt: str, model: Model, stop: List[str] = ["\n"]):
     try:
@@ -25,6 +28,8 @@ def llm(prompt: str, model: Model, stop: List[str] = ["\n"]):
         while cur_try < 6:
             if model == "text-davinci-003":
                 text = get_completion(prompt=prompt, temperature=cur_try * 0.2, stop_strs=stop)
+            elif model == "phi-4":
+                text = azure_model.get_response(Dialog=prompt)
             else:
                 text = get_chat(prompt=prompt, model=model, temperature=cur_try * 0.2, stop_strs=stop)
             # dumb way to do this
@@ -44,6 +49,7 @@ def process_ob(ob):
     return ob
 
 def alfworld_run(env, base_prompt, memory: List[str], to_print=True, ob='', model: Model = "text-davinci-003") -> Tuple[EnvironmentHistory, bool]:
+    #add the last three episodes to env history
     if len(memory) > 3:
         env_history = EnvironmentHistory(base_prompt, ob, memory[-3:], [])
     else:
@@ -95,14 +101,20 @@ def run_trial(
         config = yaml.safe_load(reader)
     split = "eval_out_of_distribution"
 
-    env = getattr(alfworld.agents.environment, config["env"]["type"])(config, train_eval=split)
-    env = env.init_env(batch_size=1)
+    #env = getattr(alfworld.agents.environment, config["env"]["type"])(config, train_eval=split)
+    #env = env.init_env(batch_size=1)
+
+    env_fn = alfworld.agents.environment.get_environment(config["env"]["type"])(config, train_eval=split)
+    env = env_fn.init_env(batch_size=1)
 
     num_successes: int = 0
     num_additional_successes: int = 0
     num_envs: int = len(env_configs)
 
     for z, env_config in enumerate(env_configs):
+        #Loads an instance of a task 
+        #Provides initial observation
+        #Logs task name and result
         ob, info = env.reset()
         ob = '\n'.join(ob[0].split('\n\n')[1:])
         name = '/'.join(info['extra.gamefile'][0].split('/')[-3:-1])
